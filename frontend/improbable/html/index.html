@@ -14,7 +14,10 @@
     <script type="text/javascript" src="/html/build/bundle.js" charset="utf-8"></script>
 
     <script>
-        var suite = mocha.run();
+        window.mochaRunEnd = false;
+        var suite = mocha.run().on('end', function () {
+            window.mochaRunEnd = true;
+        });
     </script>
 </body>
 

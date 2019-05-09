@@ -31,6 +31,7 @@ services:
     command:
       - --grpc_port=8080
   envoy:
+    container_name: proxy
     build:
       context: ./
       dockerfile: ./proxy/envoy/Dockerfile

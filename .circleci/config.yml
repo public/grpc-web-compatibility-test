@@ -2,22 +2,23 @@ version: 2
 jobs:
   build:
     docker:
-      - image: golang:latest
-    working_directory: /go/src/github.com/johanbrandhorst/grpc-web-compatibility-test
+      - image: circleci/node:lts-stretch
     steps:
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - checkout
-      - run: go build ./...
       - setup_remote_docker
-      - run: |
-        docker-compose build
-        docker-compose up -d echo-server
-        docker-compose up -d grpcwebproxy
-        docker-compose up -d improbable
-      - run: |
-        cd frontend/improbable
-        npm install
-        npm build
-        npm test
+      - run:
+          command: |
+            docker-compose up -d echo-server
+            docker-compose up -d envoy
+      - run:
+          command: |
+            docker-compose run improbable
 workflows:
   version: 2
   all:

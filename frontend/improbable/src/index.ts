@@ -13,7 +13,7 @@ import {
   ServerStreamingEchoResponse
 } from "../proto/echo_pb";
 
-const host = "http://192.168.99.100:8080";
+const host = "http://envoy:8080";
 
 var client: EchoServiceClient;
 

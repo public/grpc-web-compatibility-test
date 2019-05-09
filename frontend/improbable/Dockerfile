@@ -1,6 +1,7 @@
-FROM node:latest
+FROM circleci/node:lts-stretch-browsers
+USER node
 
-COPY . /home/node/src
+COPY --chown=node:node  . /home/node/src
 
 WORKDIR /home/node/src/frontend/improbable
 
