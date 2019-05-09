@@ -7,6 +7,17 @@ jobs:
     steps:
       - checkout
       - run: go build ./...
+      - setup_remote_docker
+      - run: |
+        docker-compose build
+        docker-compose up -d echo-server
+        docker-compose up -d grpcwebproxy
+        docker-compose up -d improbable
+      - run: |
+        cd frontend/improbable
+        npm install
+        npm build
+        npm test
 workflows:
   version: 2
   all:
